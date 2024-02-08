@@ -85,7 +85,7 @@ gallery.on('show.simplelightbox', function () {
 });
 
 function showCaptions() {
-    lightbox.outer().appendChild(galleryImage.alt);
+    gallery.outer().appendChild(galleryImage.alt);
 }
 
 

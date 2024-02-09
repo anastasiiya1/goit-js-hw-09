@@ -77,20 +77,3 @@ const gallery = new SimpleLightbox('.gallery a', {
     captionDelay: 250,
     closeOnOverlayClick: false,
 });
-
-gallery.on('show.simplelightbox', function () {
-    setTimeout(function () {
-        showCaptions();
-    }, 250);
-});
-
-function showCaptions() {
-    gallery.outer().appendChild(galleryImage.alt);
-}
-
-
-gallery.on('close.simplelightbox', function () {
-    if (galleryImage.alt) {
-        galleryImage.alt.remove();
-    }
-});

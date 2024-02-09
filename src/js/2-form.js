@@ -4,28 +4,31 @@ const textarea = form.elements.message;
 const localStorageKey = 'feedback-form-state';
 
 function updateFormFields() {
-  emailInput.value = localStorage.getItem(localStorageKey + '-email') ?? '';
-  textarea.value = localStorage.getItem(localStorageKey + '-message') ?? '';
+  const formData = JSON.parse(localStorage.getItem(localStorageKey)) || {};
+  emailInput.value = formData.email ?? '';
+  textarea.value = formData.message ?? '';
 }
 
 updateFormFields();
 
 form.addEventListener('input', function () {
-  localStorage.setItem(localStorageKey + '-email', emailInput.value);
-  localStorage.setItem(localStorageKey + '-message', textarea.value);
+  const formData = {
+    email: emailInput.value.trim(),
+    message: textarea.value.trim(),
+  };
+
+  localStorage.setItem(localStorageKey, JSON.stringify(formData));
 });
 
 form.addEventListener('submit', function (event) {
   event.preventDefault();
 
-  if (emailInput.value && textarea.value) {
-    console.log({
-      email: emailInput.value,
-      message: textarea.value,
-    });
+  const formData = JSON.parse(localStorage.getItem(localStorageKey)) || {};
 
-    localStorage.removeItem(localStorageKey + '-email');
-    localStorage.removeItem(localStorageKey + '-message');
+  if (formData.email && formData.message) {
+    console.log(formData);
+
+    localStorage.removeItem(localStorageKey);
     form.reset();
   }
 });
